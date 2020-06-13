@@ -20,4 +20,4 @@ for (let x = 0; x < 128; x++) {
 ```
 
 # Screenshot
-![irma](https://github.com/tmptrash/simplex-noise/raw/master/earth.png)
+![simplex noise](https://github.com/tmptrash/simplex-noise/raw/master/earth.png)

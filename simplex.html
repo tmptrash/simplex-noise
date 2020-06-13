@@ -12,10 +12,10 @@
                 WIDTH : 800,
                 HEIGHT: 800,
                 PERLIN: {
-                    distrib    : 1,
-                    scale      : .005,
-                    octaves    : 6,
-                    amplitude  : 1,
+                    distrib    : 2,
+                    scale      : .009,
+                    octaves    : 8,
+                    amplitude  : .8,
                     timeInc    : .005,
 
                     empty      : [0,0,0],
@@ -47,7 +47,7 @@
             const TIME_INC = Config.PERLIN.timeInc;
             const WIDTH    = Config.WIDTH;
             const HEIGHT   = Config.HEIGHT;
-            const noise    = new Simplex({scale: Config.PERLIN.scale, octaves: Config.PERLIN.octaves, amplitude: Config.PERLIN.amplitude});
+            const noise    = new Simplex({distrib: Config.PERLIN.distrib, scale: Config.PERLIN.scale, octaves: Config.PERLIN.octaves, amplitude: Config.PERLIN.amplitude});
 
             function init() {
                 for (let x = 0; x < WIDTH; x++) {

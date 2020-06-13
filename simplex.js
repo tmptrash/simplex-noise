@@ -2,8 +2,8 @@
  * A fast javascript implementation of simplex noise based on sources
  * of Jonas Wagner. https://github.com/jwagner/simplex-noise.js. Added
  * octaves, amplitude, scale and persistance parameters. Good explanation
- * may be found here: https://www.redblobgames.com/maps/terrain-from-noise.
- * Only 3D version + time is implemented. By default all configs === 1
+ * of these parameters may be found here: https://www.redblobgames.com/maps/terrain-from-noise.
+ * Only 3D version + time are implemented. By default all configs === 1
  * 
  * Config:
  *   scale     [0..1] - zoom coefficient. 0 - max zoom, 1 - min zoom
@@ -12,6 +12,15 @@
  *   octaves   [1..X] - amount of details of a 3D map
  *   random           - reference to random function, which return values between 0..1
  *
+ * Example:
+ *   let simplex = new Simplex();
+ *   for (let x = 0; x < 128; x++) {
+ *     for (let y = 0; y < 128; y++) {
+ *       z = simplex.noise(x, y);
+ *       // draw x,y,z point
+ *     }
+ *   }
+ * 
  * @author flatline
  */
 const F3 = 1.0 / 3.0;
@@ -66,20 +75,20 @@ class Simplex {
             pMod12[i] = perm[i] % 12;
         }
     }
-
     /**
-     * Does simple noise. Returns height by (x,y) and time (t)
+     * Does simplex noise. Returns height by (x,y) and time (t)
      * @param {Number} x X
      * @param {Number} y Y
      * @param {Number} t Time
      */
     noise(x, y, t) {
+        t = t || 0;
 		let amplitude = this.amplitude;
 		let scale = this.scale;
 		let noise = 0;
 
 		for (let i = 0, l = this.octaves; i < l; i++) {
-			noise += (this._rawNoise(x * scale, y * scale, t) * amplitude);
+			noise += (this.rawNoise(x * scale, y * scale, t) * amplitude);
 			amplitude *= .5;
 			scale *= 2;
 		}
@@ -87,7 +96,7 @@ class Simplex {
 		return Math.pow((noise + 1) / 2, this.distrib);
     }
 
-	_rawNoise(xin, yin, zin) {
+	rawNoise(xin, yin, zin) {
 		const permMod12 = this.permMod12;
 		const perm = this.perm;
 		const grad3 = this.grad3;
@@ -211,6 +220,10 @@ class Simplex {
 		return 32.0 * (n0 + n1 + n2 + n3);
     }
     
+    /**
+     * Initialization method
+     * @param {Function} random function reference
+     */
     _buildPermutationTable(random) {
         const p = new Uint8Array(256);
         for (let i = 0; i < 256; i++) {p[i] = i}

@@ -7,3 +7,14 @@ Fast implementation of [simplex](https://en.wikipedia.org/wiki/Simplex_noise) no
 - `distrib   [0..X]` - `0..1` - get values from top, `1..X` get values from buttom
 - `octaves   [1..X]` - amount of details of a 3D map
 - `random`           - reference to random function, which return values between `0..1`
+
+# Example
+```javascript
+let simplex = new Simplex();
+for (let x = 0; x < 128; x++) {
+  for (let y = 0; y < 128; y++) {
+    z = simplex.noise(x, y);
+    // draw x,y,z point
+  }
+}
+```

@@ -1,3 +1,7 @@
+<!--
+    This is simple implementation of earth like terrains with water, islands, forest, montains and ice
+    on the top of montains. It uses 2D canvas for drawing.
+-->
 <html>
     <head>
         <script src="./simplex.js"></script>
@@ -6,7 +10,7 @@
         </style>
     </head>
     <body>
-        <canvas id="c" width="800" height="800" style="width:800px; height:800px;"></canvas>
+        <canvas id="canvas" width="800" height="800" style="width:800px; height:800px;"></canvas>
         <script>
             const Config = {
                 WIDTH : 800,
@@ -14,7 +18,7 @@
                 PERLIN: {
                     distrib    : 2,
                     scale      : .009,
-                    octaves    : 8,
+                    octaves    : 6,
                     amplitude  : .8,
                     timeInc    : .005,
 
@@ -27,7 +31,7 @@
                 }
             };
 
-            let canvas = document.getElementById('c'),
+            let canvas = document.getElementById('canvas'),
                 ctx = canvas.getContext('2d'),
                 imgdata = ctx.getImageData(0, 0, canvas.width, canvas.height),
                 data = imgdata.data,
@@ -39,7 +43,6 @@
             const FOREST   = Config.PERLIN.forest;
             const SNOW     = Config.PERLIN.snow;
             const ROCKS    = Config.PERLIN.rocks;
-            const DISTRIB  = Config.PERLIN.distrib;
             const RADIUS   = Config.HEIGHT / 2 - 5;
             const R2       = RADIUS**2;
             const RADIUS10 = RADIUS + 5;
@@ -47,8 +50,11 @@
             const TIME_INC = Config.PERLIN.timeInc;
             const WIDTH    = Config.WIDTH;
             const HEIGHT   = Config.HEIGHT;
-            const noise    = new Simplex({distrib: Config.PERLIN.distrib, scale: Config.PERLIN.scale, octaves: Config.PERLIN.octaves, amplitude: Config.PERLIN.amplitude});
+            const simplex  = new Simplex(Config.PERLIN);
 
+            /**
+             * Just color entire canvas in black
+             */ 
             function init() {
                 for (let x = 0; x < WIDTH; x++) {
                     for (let y = 0; y < HEIGHT; y++) {
@@ -61,6 +67,9 @@
                 }                
             }
 
+            /**
+             * This loop makes the terrains alive
+             */
             init();
             window.setInterval(() => {
                 for (let y = 0; y < HEIGHT; y++) {
@@ -69,7 +78,7 @@
                         let color = EMPTY;
                         const xy2 = (x - RADIUS10)**2 + (y - RADIUS10)**2;
                         if (xy2 <= R2) {
-                            const r = noise.noise(x, y, t) * (xy2 > RADIUS90 ? R2 / xy2 - 1 : 1);
+                            const r = simplex.noise(x, y, t) * (xy2 > RADIUS90 ? R2 / xy2 - 1 : 1);
 
                             if (r < 0.2) {color = SEA; coef = (r - .2) * 2 + 1.2}
                             else if (r >= .2 && r < .4) {color = GROUND; coef = (r - .4) * 2 + 1.2}

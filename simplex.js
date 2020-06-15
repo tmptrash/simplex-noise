@@ -96,23 +96,23 @@ class Simplex {
 		return Math.pow((noise + 1) / 2, this.distrib);
     }
 
-	rawNoise(xin, yin, zin) {
+	rawNoise(xin, yin, tin) {
 		const permMod12 = this.permMod12;
 		const perm = this.perm;
 		const grad3 = this.grad3;
 		let n0, n1, n2, n3; // Noise contributions from the four corners
 		// Skew the input space to determine which simplex cell we're in
-		const s = (xin + yin + zin) * F3; // Very nice and simple skew factor for 3D
+		const s = (xin + yin + tin) * F3; // Very nice and simple skew factor for 3D
 		const i = Math.floor(xin + s);
 		const j = Math.floor(yin + s);
-		const k = Math.floor(zin + s);
+		const k = Math.floor(tin + s);
 		const t = (i + j + k) * G3;
 		const X0 = i - t; // Unskew the cell origin back to (x,y,z) space
 		const Y0 = j - t;
 		const Z0 = k - t;
 		const x0 = xin - X0; // The x,y,z distances from the cell origin
 		const y0 = yin - Y0;
-		const z0 = zin - Z0;
+		const z0 = tin - Z0;
 		// For the 3D case, the simplex shape is a slightly irregular tetrahedron.
 		// Determine which simplex we are in.
 		let i1, j1, k1; // Offsets for second corner of simplex in (i,j,k) coords

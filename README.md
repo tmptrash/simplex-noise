@@ -25,7 +25,7 @@ for (let x = 0; x < 128; x++) {
 ```
 
 # How to run
-Just put simplex.html into Chrome browser
+Just put any html file into Chrome browser
 
 # Screenshot
 ![simplex noise](https://github.com/tmptrash/simplex-noise/raw/master/earth.png)

@@ -1,7 +1,7 @@
 /**
  * A fast javascript implementation of simplex noise based on sources
  * of Jonas Wagner. https://github.com/jwagner/simplex-noise.js. Added
- * octaves, amplitude, scale and persistance parameters. Good explanation
+ * octaves, amplitude, scale and distribution parameters. Good explanation
  * of these parameters may be found here: https://www.redblobgames.com/maps/terrain-from-noise.
  * Only 3D version + time are implemented. By default all configs === 1
  * 

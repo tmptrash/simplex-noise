@@ -1,0 +1,88 @@
+<!--
+    This is simple implementation of simplex noise with different terrains like water, islands, forest, montains and ice
+    on the top of montains. It uses 2D canvas for drawing.
+-->
+<html>
+    <head>
+        <script src="./simplex.js"></script>
+        <style>
+            body {margin: 0; padding: 0}
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="800" height="800" style="width:800px; height:800px;"></canvas>
+        <script>
+            const Config = {
+                WIDTH : 800,
+                HEIGHT: 800,
+                PERLIN: {
+                    distrib    : 2,
+                    scale      : .009,
+                    octaves    : 6,
+                    amplitude  : .8,
+                    timeInc    : .005,
+
+                    sea        : [65,105,225],
+                    ground     : [238,214,175],
+                    forest     : [34,139,34],
+                    snow       : [255,250,250],
+                    rocks      : [139,137,137]
+                }
+            };
+
+            let canvas = document.getElementById('canvas'),
+                ctx = canvas.getContext('2d'),
+                imgdata = ctx.getImageData(0, 0, canvas.width, canvas.height),
+                data = imgdata.data;
+
+            const SEA      = Config.PERLIN.sea;
+            const GROUND   = Config.PERLIN.ground;
+            const FOREST   = Config.PERLIN.forest;
+            const SNOW     = Config.PERLIN.snow;
+            const ROCKS    = Config.PERLIN.rocks;
+            const WIDTH    = Config.WIDTH;
+            const HEIGHT   = Config.HEIGHT;
+            const simplex  = new Simplex(Config.PERLIN);
+
+            /**
+             * Just color entire canvas in black
+             */ 
+            function init() {
+                for (let x = 0; x < WIDTH; x++) {
+                    for (let y = 0; y < HEIGHT; y++) {
+                        const offs = (x + y * WIDTH) * 4;
+                        data[offs + 0] = 0;
+                        data[offs + 1] = 0;
+                        data[offs + 2] = 0;
+                        data[offs + 3] = 255;
+                    }
+                }                
+            }
+
+            /**
+             * This loop makes the terrains alive
+             */
+            init();
+            window.setInterval(() => {
+                for (let y = 0; y < HEIGHT; y++) {
+                    for (let x = 0; x < WIDTH; x++) {
+                        let color;
+                        const z = simplex.noise(x, y)
+
+                        if (z < 0.2) {color = SEA}
+                        else if (z >= .2 && z < .4) {color = GROUND}
+                        else if (z >= .4 && z < .6) {color = FOREST}
+                        else if (z >= .6 && z < .8) {color = ROCKS}
+                        else if (z >= .8) {color = SNOW}
+
+                        const offs = (x + y * WIDTH) * 4;
+                        data[offs + 0] = color[0];
+                        data[offs + 1] = color[1];
+                        data[offs + 2] = color[2];
+                    }
+                }
+                ctx.putImageData(imgdata, 0, 0);
+            });
+        </script>
+    </body>
+</html>

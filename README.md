@@ -1,5 +1,5 @@
 # simplex-noise
-Fast implementation of [simplex](https://en.wikipedia.org/wiki/Simplex_noise) noise using ES6. Based on [source](https://github.com/jwagner/simplex-noise.js) of Jonas Wagner. Added octaves, amplitude, scale, and persistance. Good explanation of these parameters may be found [here](https://www.redblobgames.com/maps/terrain-from-noise). Only 3D version + time is implemented. By default all configs === `1`.
+Fast implementation of [simplex](https://en.wikipedia.org/wiki/Simplex_noise) noise using ES6. Based on [source](https://github.com/jwagner/simplex-noise.js) of Jonas Wagner. Added octaves, amplitude, scale, and distribution. Good explanation of these parameters may be found [here](https://www.redblobgames.com/maps/terrain-from-noise). Only 3D version + time is implemented. By default all configs === `1`.
 Simplex noise may be used for generationg terrains, clouds, fog and different visualisations. It's
 used in game development and computer graphics. The idea behind is very simple. You just need to
 create an instance of `Simplex` class and call `noise()` function. It returns height (or z coordinate),

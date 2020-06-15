@@ -31,11 +31,11 @@
                 }
             };
 
-            let canvas = document.getElementById('canvas'),
-                ctx = canvas.getContext('2d'),
-                imgdata = ctx.getImageData(0, 0, canvas.width, canvas.height),
-                data = imgdata.data,
-                t = 0;
+            const canvas   = document.getElementById('canvas');
+            const ctx      = canvas.getContext('2d');
+            const imgdata  = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data     = imgdata.data;
+            let   t        = 0;
 
             const EMPTY    = Config.PERLIN.empty;
             const SEA      = Config.PERLIN.sea;

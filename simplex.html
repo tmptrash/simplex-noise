@@ -1,5 +1,5 @@
 <!--
-    This is simple implementation of simplex noise. It uses 2D canvas for drawing.
+    This is simple demo of simplex noise. It uses 2D canvas for drawing.
 -->
 <html>
     <head>
@@ -11,25 +11,15 @@
     <body>
         <canvas id="canvas" width="800" height="800" style="width:800px; height:800px;"></canvas>
         <script>
-            const Config = {
-                WIDTH : 800,
-                HEIGHT: 800,
-                PERLIN: {
-                    distrib    : 2,
-                    scale      : .009,
-                    octaves    : 6,
-                    amplitude  : .8,
-                    timeInc    : .005
-                }
-            };
-
             const canvas   = document.getElementById('canvas');
             const ctx      = canvas.getContext('2d');
             const imgdata  = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data     = imgdata.data;
-            const WIDTH    = Config.WIDTH;
-            const HEIGHT   = Config.HEIGHT;
-            const simplex  = new Simplex(Config.PERLIN);
+            const WIDTH    = 800;
+            const HEIGHT   = 800;
+            const SCALE    = .005;
+            const simplex  = new Simplex();
+            let   t        = 0;
 
             /**
              * Just color entire canvas in black
@@ -53,7 +43,7 @@
             window.setInterval(() => {
                 for (let y = 0; y < HEIGHT; y++) {
                     for (let x = 0; x < WIDTH; x++) {
-                        const z = simplex.noise(x, y);
+                        const z = simplex.rawNoise(x * SCALE, y * SCALE, t);
 
                         const offs = (x + y * WIDTH) * 4;
                         data[offs + 0] = z * 255;
@@ -61,6 +51,7 @@
                         data[offs + 2] = z * 255;
                     }
                 }
+                t += .01;
                 ctx.putImageData(imgdata, 0, 0);
             });
         </script>

@@ -27,5 +27,5 @@ for (let x = 0; x < 128; x++) {
 # How to run
 Just put any html file into Chrome browser
 
-# Screenshot
+# Screenshots
 ![simplex noise](https://github.com/tmptrash/simplex-noise/raw/master/screenshot.png)

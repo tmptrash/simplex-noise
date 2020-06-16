@@ -14,12 +14,19 @@
  *
  * Example:
  *   let simplex = new Simplex();
- *   for (let x = 0; x < 128; x++) {
- *     for (let y = 0; y < 128; y++) {
- *       z = simplex.noise(x, y);
- *       // draw x,y,z point
+ *   let t = 0;
+ * 
+ *   function drawNoise(width, height) {
+ *     for (let x = 0; x < width; x++) {
+ *       for (let y = 0; y < height; y++) {
+ *         z = simplex.noise(x, y, t);
+ *         // draw x,y,z point
+ *       }
  *     }
+ *     t += .001;
  *   }
+ *   ...
+ *   drawNoise(128, 128);
  * 
  * @author flatline
  */

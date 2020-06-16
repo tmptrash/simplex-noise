@@ -16,12 +16,21 @@ below you may generate diffent realistic world.
 # Example
 ```javascript
 let simplex = new Simplex({distrib: 2, scale: .009, octaves: 8, amplitude: .005});
-for (let x = 0; x < 128; x++) {
-  for (let y = 0; y < 128; y++) {
-    const z = simplex.noise(x, y);
-    // draw x,y,z point
+let t = 0;
+/**
+ * Call this function many times to obtain dynamic noise
+ */
+function drawNoise(width, height) {
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      const z = simplex.noise(x, y, t);
+      // draw x,y,z point
+    }
   }
+  t += .001;
 }
+
+drawNoise(128, 128);
 ```
 
 # How to run

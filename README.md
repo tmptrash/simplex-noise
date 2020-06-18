@@ -4,7 +4,7 @@ Simplex noise may be used for generationg terrains, clouds, fog and different vi
 used in game development and computer graphics. The idea behind is very simple. You just need to
 create an instance of `Simplex` class and call `noise()` function. It returns height (or z coordinate),
 which may be used to create 3D or 2D terrain. Playing with colors and parameters, which are described
-below you may generate diffent realistic world.
+below you may generate different realistic worlds.
  
 # Configuration:
 - `scale     [0..1]` - zoom coefficient. `0` - max zoom, `1` - min zoom
